@@ -11,8 +11,8 @@ fn main() {
         if input_user == "s\n"||input_user == "S\n"{ break; }
 
         //operations mathematics
-        input_user= multiplication(input_user);
-        input_user= division(input_user);
+        input_user = prioridad_multdiv(input_user);
+        input_user = prioridad_multdiv(input_user);
         input_user= add(input_user);
         input_user= minus(input_user);
         println!("Resultado --> {}", input_user);
@@ -134,4 +134,22 @@ fn minus(mut input_user: String)->String{
         let value_c_replacer:&str = &value_c_resulted.to_string();                                                  
         input_user = input_user.replace(replaced_capture, value_c_replacer);
     }
+}
+
+fn prioridad_multdiv(input: String)->String{
+    let regular_expresion_master = Regex::new(r"(\d+)\s*?(\*||\/)\s*?(\d+)").unwrap();
+    let captures_regular_expresion = regular_expresion_master.captures(&input);
+    let operator= captures_regular_expresion.unwrap().get(2).unwrap().as_str();
+
+    //le damos prioridad a las operaciones
+    if operator == "*" {
+        return multiplication(input);
+    }
+    else if operator == "/" {
+        return division(input);
+    }
+    else {
+        return input;
+    }
+
 }
