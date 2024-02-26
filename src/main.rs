@@ -139,6 +139,9 @@ fn minus(mut input_user: String)->String{
 fn prioridad_multdiv(input: String)->String{
     let regular_expresion_master = Regex::new(r"(\d+)\s*?(\*||\/)\s*?(\d+)").unwrap();
     let captures_regular_expresion = regular_expresion_master.captures(&input);
+    
+    if captures_regular_expresion.is_none(){ return input; }
+
     let operator= captures_regular_expresion.unwrap().get(2).unwrap().as_str();
 
     //le damos prioridad a las operaciones
